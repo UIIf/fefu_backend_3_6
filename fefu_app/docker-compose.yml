@@ -40,7 +40,36 @@ services:
             test: ["CMD", "pg_isready", "-q", "-d", "${DB_DATABASE}", "-U", "${DB_USERNAME}"]
             retries: 3
             timeout: 5s
+    bitnami_postgres:
+        image: 'bitnami/postgresql:latest'
+        ports:
+            - 8081:8081
+        restart: always
+        environment:
+            PGPASSWORD: '${DB_PASSWORD:-secret}'
+            POSTGRES_DB: '${DB_DATABASE}'
+            POSTGRES_USER: '${DB_USERNAME}'
+            POSTGRES_PASSWORD: '${DB_PASSWORD:-secret}'
+            POSTGRESQL_PASSWORD: ${DB_PASSWORD:-secret}'
+        networks:
+            - app-tier
+        volumes:
+            - ./volume:/bitnami/postgresql
+    pgadmin4:
+        image: 'dpage/pgadmin4:latest'
+        restart: always
+        ports:
+            - '${FORWARD_PGADMIN_PORT:-8080}:80'
+        depends_on:
+            - bitnami_postgres
+        environment:
+            PGADMIN_DEFAULT_EMAIL: '${PGADMIN_EMAIL}' 
+            PGADMIN_DEFAULT_PASSWORD: '${PGADMIN_PASSWORD:-secret}'
+        networks:
+            - app-tier
 networks:
+    app-tier:
+        driver: bridge
     sail:
         driver: bridge
 volumes:
