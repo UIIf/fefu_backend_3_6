@@ -2,6 +2,7 @@
 version: '3'
 services:
     laravel.test:
+        container_name: 'laravel'
         build:
             context: ./vendor/laravel/sail/runtimes/8.1
             dockerfile: Dockerfile
@@ -24,6 +25,7 @@ services:
         depends_on:
             - pgsql
     pgsql:
+        container_name: 'pgsql'
         image: 'postgres:13'
         ports:
             - '${FORWARD_DB_PORT:-5432}:5432'
@@ -32,6 +34,7 @@ services:
             POSTGRES_DB: '${DB_DATABASE}'
             POSTGRES_USER: '${DB_USERNAME}'
             POSTGRES_PASSWORD: '${DB_PASSWORD:-secret}'
+            POSTGRESQL_PASSWORD: ${DB_PASSWORD:-secret}'
         volumes:
             - 'sail-pgsql:/var/lib/postgresql/data'
         networks:
@@ -40,33 +43,17 @@ services:
             test: ["CMD", "pg_isready", "-q", "-d", "${DB_DATABASE}", "-U", "${DB_USERNAME}"]
             retries: 3
             timeout: 5s
-    bitnami_postgres:
-        image: 'bitnami/postgresql:latest'
-        ports:
-            - 8081:8081
-        restart: always
-        environment:
-            PGPASSWORD: '${DB_PASSWORD:-secret}'
-            POSTGRES_DB: '${DB_DATABASE}'
-            POSTGRES_USER: '${DB_USERNAME}'
-            POSTGRES_PASSWORD: '${DB_PASSWORD:-secret}'
-            POSTGRESQL_PASSWORD: ${DB_PASSWORD:-secret}'
-        networks:
-            - app-tier
-        volumes:
-            - ./volume:/bitnami/postgresql
     pgadmin4:
+        container_name: 'pgadmin'
         image: 'dpage/pgadmin4:latest'
         restart: always
         ports:
-            - '${FORWARD_PGADMIN_PORT:-8080}:80'
-        depends_on:
-            - bitnami_postgres
+            - 8080:80
         environment:
-            PGADMIN_DEFAULT_EMAIL: '${PGADMIN_EMAIL}' 
+            PGADMIN_DEFAULT_EMAIL: '${PGADMIN_EMAIL}'
             PGADMIN_DEFAULT_PASSWORD: '${PGADMIN_PASSWORD:-secret}'
         networks:
-            - app-tier
+            - sail
 networks:
     app-tier:
         driver: bridge
