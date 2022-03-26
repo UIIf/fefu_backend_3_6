@@ -2,7 +2,7 @@
 version: '3'
 services:
     laravel.test:
-        container_name: 'laravel'
+        container_name: 'laravel_container'
         build:
             context: ./vendor/laravel/sail/runtimes/8.1
             dockerfile: Dockerfile
@@ -25,7 +25,7 @@ services:
         depends_on:
             - pgsql
     pgsql:
-        container_name: 'pgsql'
+        container_name: 'pgsql_container'
         image: 'postgres:13'
         ports:
             - '${FORWARD_DB_PORT:-5432}:5432'
