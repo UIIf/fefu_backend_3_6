@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Builder;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -22,7 +23,7 @@ class News extends Model
             ]
         ];
     }
-
+    
     public function scopePublished(Builder $builder): Builder{
         return $builder->where('published_at', '<', Carbon::now());
     }
