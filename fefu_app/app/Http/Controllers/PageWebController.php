@@ -16,9 +16,6 @@ class PageWebController extends Controller
     public function __invoke(Request $request, string $slug)
     {
         $page = Page::query()
-            // ->where([
-            //     ['slug',$slug],
-            //     ])
             ->where('slug','=',$slug)
             ->first();
         if($page === null)
