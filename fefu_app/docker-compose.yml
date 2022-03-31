@@ -34,7 +34,6 @@ services:
             POSTGRES_DB: '${DB_DATABASE}'
             POSTGRES_USER: '${DB_USERNAME}'
             POSTGRES_PASSWORD: '${DB_PASSWORD:-secret}'
-            POSTGRESQL_PASSWORD: ${DB_PASSWORD:-secret}'
         volumes:
             - 'sail-pgsql:/var/lib/postgresql/data'
         networks:
@@ -48,7 +47,7 @@ services:
         image: 'dpage/pgadmin4:latest'
         restart: always
         ports:
-            - 8080:80
+            - '${FORWARD_PGADMIN_PORT:-8080}:80'
         environment:
             PGADMIN_DEFAULT_EMAIL: '${PGADMIN_EMAIL}'
             PGADMIN_DEFAULT_PASSWORD: '${PGADMIN_PASSWORD:-secret}'
