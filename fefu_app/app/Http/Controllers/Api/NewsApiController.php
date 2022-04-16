@@ -1,12 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Http\Requests\StoreNewsRequest;
-use App\Http\Requests\UpdateNewsRequest;
+use App\Http\Controllers\Controller;
 use App\Http\Resources\NewsResource;
 use App\Models\News;
-use App\OpenApi\Responses\ShowNewsResponse;
 use Vyuldashev\LaravelOpenApi\Attributes as OpenApi;
 
 #[OpenApi\PathItem]
@@ -17,12 +15,12 @@ class NewsApiController extends Controller
      *
      * @return Responsable
      */
-    #[OpenApi\Operation]
-    #[OpenApi\Response(factory: ListNewsResponse::class, statusCode:200)]
+    #[OpenApi\Operation(tags: ['news'])]
+    #[OpenApi\Response(factory: \App\OpenApi\Responses\ListNewsResponse::class, statusCode: 200)]
     public function index()
     {
         return NewsResource::collection(
-            News::all()
+            News::query()->published()->paginate(5)
         );
     }
 
@@ -34,12 +32,13 @@ class NewsApiController extends Controller
      * @param  string $slug
      * @return Responsable
      */
-    #[OpenApi\Operation]
-    #[OpenApi\Response(factory: ShowNewsResponse::class, statusCode:200)]
+    #[OpenApi\Operation(tags: ['news'])]
+    #[OpenApi\Response(factory: \App\OpenApi\Responses\ShowNewsResponse::class, statusCode: 200)]
+    #[OpenApi\Response(factory: \App\OpenApi\Responses\NotFoundResponse::class, statusCode: 404)]
     public function show(string $slug)
     {
         return new NewsResource(
-            News::query()->where('slug',$slug)->firstOrFail()
+            News::query()->published()->where('slug',$slug)->firstOrFail()
         );
     }
 
