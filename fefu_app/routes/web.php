@@ -24,3 +24,4 @@ Route::get('/page/{slug}', [PageWebController::class, 'show']);
 
 Route::get('/news', [NewsWebController::class, 'index']);
 Route::get('/news/{slug}', [NewsWebController::class, 'show']);
+
