@@ -19,9 +19,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/page', [PageWebController::class, 'index']);
-Route::get('/page/{slug}', [PageWebController::class, 'show']);
+Route::resource('news', NewsWebController::class)->only([
+    'index',
+    'show',
+]);
 
-Route::get('/news', [NewsWebController::class, 'index']);
-Route::get('/news/{slug}', [NewsWebController::class, 'show']);
+Route::get('/{slug}', [PageWebController::class, 'show']);
 

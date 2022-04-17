@@ -8,20 +8,6 @@ use Illuminate\Http\Request;
 
 class PageWebController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     *
-     * @return \Illuminate\Http\Response
-     * @return Responsable
-     */
-    public function index()
-    {
-        $pageList = Page::paginate(5);
-        return view('pageList', ['pageList' => $pageList]);
-    }
-
-
      /**
      * Display the specified resource.
      *
