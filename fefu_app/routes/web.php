@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\PageWebController;
+use App\Http\Controllers\Web\PageWebController;
+use App\Http\Controllers\Web\NewsWebController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,4 +19,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/{slug}', PageWebController::class);
+Route::resource('news', NewsWebController::class)->only([
+    'index',
+    'show',
+]);
+
+Route::get('/{slug}', [PageWebController::class, 'show']);
+
