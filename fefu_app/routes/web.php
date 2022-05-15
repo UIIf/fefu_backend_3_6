@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\Web\AuthWebController;
 use App\Http\Controllers\Web\PageWebController;
 use App\Http\Controllers\Web\NewsWebController;
+use App\Http\Controllers\Web\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,5 +26,27 @@ Route::resource('news', NewsWebController::class)->only([
     'show',
 ]);
 
-Route::get('/{slug}', [PageWebController::class, 'show']);
+Route::get('/profile', [ProfileController::class, 'show'])
+    ->name('profile')
+    ->middleware('auth');
+
+    Route::get('/profile', [ProfileController::class, 'show'])
+    ->name('profile')
+    ->middleware('auth');
+
+
+Route::get('/login', [AuthWebController::class, 'loginForm'])
+    ->name('login');
+
+Route::post('/login', [AuthWebController::class, 'login'])
+    ->name('login.post');
+
+Route::post('/logout', [AuthWebController::class, 'logout'])
+    ->name('logout');
+
+Route::get('/register', [AuthWebController::class, 'registerForm'])
+    ->name('register');
+
+Route::post('/register', [AuthWebController::class, 'register'])
+    ->name('register.post');
 
