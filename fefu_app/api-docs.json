@@ -95,7 +95,51 @@
                             "type": "string"
                         },
                         "example": "test"
-
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "Email",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "test@test.test"
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "Password",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "1234"
+                    }
+                ],
+                "responses": {
+                    "422": {
+                        "$ref": "#\/components\/responses\/ErrorValidation"
+                    },
+                    "200": {
+                        "$ref": "#\/components\/responses\/User Token"
+                    }
+                }
+            }
+        },
+        "\/api\/logout": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "logout user",
+                "responses": {
+                    "200": {
+                        "description": "logout success"
+                    }
+                }
+            }
+        },
         "\/api\/appeal": {
             "post": {
                 "tags": [
@@ -123,29 +167,11 @@
                             "type": "string"
                         },
                         "example": "88005553535"
-
                     },
                     {
                         "name": "email",
                         "in": "query",
                         "description": "Email",
-
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        },
-                        "example": "test@test.test"
-                    },
-                    {
-                        "name": "password",
-                        "in": "query",
-                        "description": "Password",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        },
-                        "example": "1234"
-
                         "required": false,
                         "schema": {
                             "type": "string"
@@ -162,27 +188,12 @@
                             "maxLength": 1000
                         },
                         "example": "Message"
-
                     }
                 ],
                 "responses": {
                     "422": {
                         "$ref": "#\/components\/responses\/ErrorValidation"
                     },
-                    "200": {
-
-                        "$ref": "#\/components\/responses\/User Token"
-                    }
-                }
-            }
-        },
-        "\/api\/logout": {
-            "post": {
-                "tags": [
-                    "auth"
-                ],
-                "summary": "logout user",
-                "responses": {
                     "200": {
                         "description": "Successful response"
                     }
@@ -479,23 +490,6 @@
                     }
                 }
             }
-        },
-        "responses": {
-            "ErrorValidation": {
-                "description": "Validation errors",
-                "content": {
-                    "application\/json": {
-                        "schema": {
-                            "type": "array",
-                            "example": {
-                                "name": [
-                                    "Something is wrong with this field!"
-                                ]
-                            }
-                        }
-                    }
-                }
-            }
         }
     },
     "tags": [
@@ -510,6 +504,10 @@
         {
             "name": "appeal",
             "description": "For applications"
+        },
+        {
+            "name": "auth",
+            "description": "Auth"
         }
     ]
 }

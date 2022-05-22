@@ -34,6 +34,10 @@ return [
                     'name' => 'appeal',
                     'description' => 'For applications',
                  ],
+                [
+                    'name' => 'auth',
+                    'description' => 'Auth',
+                ],
 
             ],
 
