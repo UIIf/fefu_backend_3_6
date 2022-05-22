@@ -6,7 +6,7 @@
     },
     "servers": [
         {
-            "url": "http:\/\/fefu_app.test"
+            "url": "http:\/\/localhost"
         }
     ],
     "paths": {
@@ -95,11 +95,41 @@
                             "type": "string"
                         },
                         "example": "test"
+
+        "\/api\/appeal": {
+            "post": {
+                "tags": [
+                    "appeal"
+                ],
+                "summary": "Sending appeals to the db.",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Name",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "maxLength": 100
+                        },
+                        "example": "User"
+                    },
+                    {
+                        "name": "phone",
+                        "in": "query",
+                        "description": "Phone",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "88005553535"
+
                     },
                     {
                         "name": "email",
                         "in": "query",
                         "description": "Email",
+
                         "required": true,
                         "schema": {
                             "type": "string"
@@ -115,6 +145,24 @@
                             "type": "string"
                         },
                         "example": "1234"
+
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "test@gmail.com"
+                    },
+                    {
+                        "name": "message",
+                        "in": "query",
+                        "description": "Message",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "maxLength": 1000
+                        },
+                        "example": "Message"
+
                     }
                 ],
                 "responses": {
@@ -122,6 +170,7 @@
                         "$ref": "#\/components\/responses\/ErrorValidation"
                     },
                     "200": {
+
                         "$ref": "#\/components\/responses\/User Token"
                     }
                 }
@@ -135,7 +184,7 @@
                 "summary": "logout user",
                 "responses": {
                     "200": {
-                        "description": "logout success"
+                        "description": "Successful response"
                     }
                 }
             }
@@ -430,12 +479,37 @@
                     }
                 }
             }
+        },
+        "responses": {
+            "ErrorValidation": {
+                "description": "Validation errors",
+                "content": {
+                    "application\/json": {
+                        "schema": {
+                            "type": "array",
+                            "example": {
+                                "name": [
+                                    "Something is wrong with this field!"
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "tags": [
         {
+            "name": "page",
+            "description": "Shows pages"
+        },
+        {
             "name": "news",
-            "description": "Application users"
+            "description": "Shows news"
+        },
+        {
+            "name": "appeal",
+            "description": "For applications"
         }
     ]
 }

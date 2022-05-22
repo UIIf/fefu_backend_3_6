@@ -15,18 +15,25 @@ return [
 
             'servers' => [
                 [
-                    'url' => env('APP_URL'),
+                    'url' => 'http://localhost',
                     'description' => null,
                     'variables' => [],
                 ],
             ],
 
             'tags' => [
-
+                [
+                    'name' => 'page',
+                    'description' => 'Shows pages',
+                 ],
                 [
                    'name' => 'news',
-                   'description' => 'Application users',
+                   'description' => 'Shows news',
                 ],
+                [
+                    'name' => 'appeal',
+                    'description' => 'For applications',
+                 ],
 
             ],
 

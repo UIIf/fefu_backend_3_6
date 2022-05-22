@@ -1,6 +1,8 @@
 <?php
 
+
 use App\Http\Controllers\Api\AuthApiController;
+use App\Http\Controllers\Api\AppealApiController;
 use App\Http\Controllers\Api\NewsApiController;
 use App\Http\Controllers\Api\PageAppiController;
 use Illuminate\Http\Request;
@@ -24,6 +26,10 @@ Route::post('login', [AuthApiController::class, 'login']);
 Route::post('register', [AuthApiController::class, 'register']);
 
 Route::post('logout', [AuthApiController::class, 'logout']);
+
+Route::apiResource('appeal', AppealApiController::class)->only([
+    'store'
+]);
 
 Route::apiResource('news', NewsApiController::class)->only([
     'index',

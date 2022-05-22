@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Web\AuthWebController;
+use App\Http\Controllers\Web\AppealWebController;
 use App\Http\Controllers\Web\PageWebController;
 use App\Http\Controllers\Web\NewsWebController;
 use App\Http\Controllers\Web\ProfileController;
@@ -26,6 +27,7 @@ Route::resource('news', NewsWebController::class)->only([
     'show',
 ]);
 
+
 Route::get('/profile', [ProfileController::class, 'show'])
     ->name('profile')
     ->middleware('auth');
@@ -45,6 +47,10 @@ Route::get('/register', [AuthWebController::class, 'registerForm'])
 
 Route::post('/register', [AuthWebController::class, 'register'])
     ->name('register.post');
+
+Route::get('/appeal', [AppealWebController::class, 'form'])->name('appeal.form');
+Route::post('/appeal', [AppealWebController::class, 'send'])->name('appeal.send');
+
 
 Route::get('/{slug}', [PageWebController::class, 'show']);
 
