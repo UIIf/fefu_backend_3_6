@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\BaseLoginApiRequest;
 use App\Http\Requests\BaseRegisterApiRequest;
 use App\Models\User;
-
+use Carbon\Carbon;
 use Vyuldashev\LaravelOpenApi\Attributes as OpenApi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -44,6 +44,8 @@ class AuthApiController extends Controller
 
         if (Auth::attempt($data, true)) {
             $user = Auth::user();
+            $user->app_logged_in_at = Carbon::now();
+            $user->save();
             $authToken = $user->createToken('authToken')->plainTextToken;
 
             return response()->json([
@@ -70,7 +72,15 @@ class AuthApiController extends Controller
     public function register(BaseRegisterApiRequest $request)
     {
         $data = $request->validated();
-        $user = User::createFormRequest($data);
+        $user = User::query()
+            ->where('email', $data['email'])
+            ->first();
+
+        if ($user) {
+            $user = User::createFromRequest($user, $data);
+        } else {
+            $user = User::createFromRequest($data);
+        }
 
         $authToken = $user->createToken('authToken')->plainTextToken;
 
