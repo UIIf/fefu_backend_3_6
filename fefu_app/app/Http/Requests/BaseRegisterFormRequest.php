@@ -33,13 +33,19 @@ class BaseRegisterFormRequest extends FormRequest
     public function withValidator($validator)
     {
         $validator->after(function ($validator) {
-            $user = User::query()
-                ->where('email', $this->request->get('email'))
-                ->whereNotNull('app_registered_at')
-                ->first();
+            if(!$this->validated('email'))
+            {
+                $validator->errors()->add('email', 'The email validation error');
+            }
+            else{
+                $user = User::query()
+                    ->where('email', $this->request->get('email'))
+                    ->whereNotNull('app_registered_at')
+                    ->first();
 
-            if ($user !== null) {
-                $validator->errors()->add('email', 'Email already exist');
+                if ($user !== null) {
+                    $validator->errors()->add('email', 'Email already exist');
+                }
             }
         });
     }

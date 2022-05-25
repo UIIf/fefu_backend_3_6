@@ -76,8 +76,8 @@ class AuthApiController extends Controller
             ->where('email', $data['email'])
             ->first();
 
-        if ($user) {
-            $user = User::createFromRequest($user, $data);
+        if ($user !== null) {
+            $user = User::changeFromRequest($user, $data);
         } else {
             $user = User::createFromRequest($data);
         }
