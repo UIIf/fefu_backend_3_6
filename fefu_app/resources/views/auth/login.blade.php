@@ -29,5 +29,7 @@
             <input type="submit"/>
         </div>
     </form>
+    <p><a href="{{route('oauth.redirect', ['provider' => 'github'])}}">login through github</a></p>
+    <p><a href="{{route('oauth.redirect', ['provider' => 'google'])}}">login through google</a></p>
 </body>
 </html>

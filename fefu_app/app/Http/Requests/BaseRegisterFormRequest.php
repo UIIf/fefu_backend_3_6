@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Requests;
-
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 
 class BaseRegisterFormRequest extends FormRequest
@@ -28,5 +28,20 @@ class BaseRegisterFormRequest extends FormRequest
             'email' => ['required', 'email', 'unique:users'],
             'password' => ['required', 'min:1|max:255'],
         ];
+    }
+
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            
+            $user = User::query()
+                ->where('email', $this->validated('email'))
+                ->whereNotNull('app_registered_at')
+                ->first();
+
+            if ($user !== null) {
+                $validator->errors()->add('email', 'Email already exist');
+            }
+        });
     }
 }
