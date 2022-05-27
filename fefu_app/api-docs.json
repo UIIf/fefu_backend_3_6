@@ -343,10 +343,93 @@
                     }
                 }
             }
+        },
+        "\/api\/Categories": {
+            "get": {
+                "tags": [
+                    "categories"
+                ],
+                "summary": "Display categories.",
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#\/components\/schemas\/Categories"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/api\/Categories\/{Category}": {
+            "get": {
+                "tags": [
+                    "categories"
+                ],
+                "summary": "Display Categories through slug.",
+                "parameters": [
+                    {
+                        "name": "Category",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#\/components\/schemas\/Categories"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
         }
     },
     "components": {
         "schemas": {
+            "Categories": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "slug": {
+                        "type": "string"
+                    },
+                    "parent_id": {
+                        "type": "string"
+                    }
+                }
+            },
             "News": {
                 "type": "object",
                 "properties": {
@@ -508,6 +591,10 @@
         {
             "name": "auth",
             "description": "Auth"
+        },
+        {
+            "name": "categories",
+            "description": "Categories"
         }
     ]
 }

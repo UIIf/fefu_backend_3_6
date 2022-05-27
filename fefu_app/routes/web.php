@@ -3,6 +3,7 @@
 use App\Http\Controllers\Web\OAuthController;
 use App\Http\Controllers\Web\AuthWebController;
 use App\Http\Controllers\Web\AppealWebController;
+use App\Http\Controllers\Web\CategoriesWebController;
 use App\Http\Controllers\Web\PageWebController;
 use App\Http\Controllers\Web\NewsWebController;
 use App\Http\Controllers\Web\ProfileController;
@@ -23,11 +24,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/categories/{slug?}', [CategoriesWebController::class, 'index'])
+    ->name('categories');
+
 Route::resource('news', NewsWebController::class)->only([
     'index',
     'show',
 ]);
-
 
 Route::get('/profile', [ProfileController::class, 'show'])
     ->name('profile')
