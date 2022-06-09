@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\ProductAttributeValues;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -19,6 +19,9 @@ class DatabaseSeeder extends Seeder
             PageSeeder::class,
             NewsSeeder::class,
             ProductCategorySeeder::class,
+            ProductAttributeSeeder::class,
+            ProductSeeder::class,
+            ProductAttributeValuesSeeder::class,
         ]);
     }
 }

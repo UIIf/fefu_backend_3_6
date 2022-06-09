@@ -344,7 +344,7 @@
                 }
             }
         },
-        "\/api\/Categories": {
+        "\/api\/categories": {
             "get": {
                 "tags": [
                     "categories"
@@ -372,7 +372,7 @@
                 }
             }
         },
-        "\/api\/Categories\/{Category}": {
+        "\/api\/categories\/{category}": {
             "get": {
                 "tags": [
                     "categories"
@@ -380,7 +380,7 @@
                 "summary": "Display Categories through slug.",
                 "parameters": [
                     {
-                        "name": "Category",
+                        "name": "category",
                         "in": "path",
                         "required": true,
                         "schema": {
@@ -398,6 +398,91 @@
                                     "properties": {
                                         "data": {
                                             "$ref": "#\/components\/schemas\/Categories"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
+        "\/api\/catalog\/product\/list": {
+            "get": {
+                "tags": [
+                    "products"
+                ],
+                "summary": "Display all products category.",
+                "parameters": [
+                    {
+                        "name": "category_slug",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#\/components\/schemas\/ShortInfoProduct"
+                                            }
+                                        },
+                                        "links": {
+                                            "$ref": "#\/components\/schemas\/PaginatorLinks"
+                                        },
+                                        "meta": {
+                                            "$ref": "#\/components\/schemas\/PaginatorMeta"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
+        "\/api\/catalog\/product\/details": {
+            "get": {
+                "tags": [
+                    "products"
+                ],
+                "summary": "Display product by slug.",
+                "parameters": [
+                    {
+                        "name": "product_slug",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#\/components\/schemas\/FullInfoProduct"
                                         }
                                     }
                                 }
@@ -427,6 +512,40 @@
                     },
                     "parent_id": {
                         "type": "string"
+                    }
+                }
+            },
+            "FullInfoProduct": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "slug": {
+                        "type": "string"
+                    },
+                    "price": {
+                        "type": "string"
+                    },
+                    "category": {
+                        "$ref": "#\/components\/schemas\/Categories"
+                    },
+                    "attributes": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "value": {
+                                    "type": "string"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -526,6 +645,23 @@
                     }
                 }
             },
+            "ShortInfoProduct": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "slug": {
+                        "type": "string"
+                    },
+                    "price": {
+                        "type": "string"
+                    }
+                }
+            },
             "User": {
                 "type": "object",
                 "properties": {
@@ -595,6 +731,10 @@
         {
             "name": "categories",
             "description": "Categories"
+        },
+        {
+            "name": "products",
+            "description": "Products"
         }
     ]
 }

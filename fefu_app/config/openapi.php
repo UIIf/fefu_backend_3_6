@@ -42,6 +42,10 @@ return [
                     'name' => 'categories',
                     'description' => 'Categories',
                 ],
+                [
+                    'name' => 'products',
+                    'description' => 'Products',
+                ],
             ],
 
             'security' => [
