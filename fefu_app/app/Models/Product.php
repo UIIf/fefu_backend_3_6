@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -38,5 +39,10 @@ class Product extends Model
             ->join('product_attributes', 'product_attributes.id', '=', 'product_attribute_values.product_attribute_id')
             ->orderBy('product_attributes.sort_order')
             ->orderBy('product_attributes.id');
+    }
+
+    public function scopeSearch(Builder $builder, string $searchQuery): Builder
+    {
+            return $builder->where('products.name', 'ilike', "%{$searchQuery}%");
     }
 }
