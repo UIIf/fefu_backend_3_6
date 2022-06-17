@@ -424,6 +424,36 @@
                         "schema": {
                             "type": "string"
                         }
+                    },
+                    {
+                        "name": "search_query",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "sort_mode",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filters",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            }
+                        }
                     }
                 ],
                 "responses": {
@@ -445,6 +475,12 @@
                                         },
                                         "meta": {
                                             "$ref": "#\/components\/schemas\/PaginatorMeta"
+                                        },
+                                        "filters": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#\/components\/schemas\/Filter"
+                                            }
                                         }
                                     }
                                 }
@@ -512,6 +548,37 @@
                     },
                     "parent_id": {
                         "type": "string"
+                    }
+                }
+            },
+            "Filter": {
+                "type": "object",
+                "properties": {
+                    "key": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "integer"
+                    },
+                    "options": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "value": {
+                                    "type": "string"
+                                },
+                                "isSelected": {
+                                    "type": "boolean"
+                                },
+                                "productCount": {
+                                    "type": "integer"
+                                }
+                            }
+                        }
                     }
                 }
             },
