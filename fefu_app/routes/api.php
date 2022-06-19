@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\CategoriesApiController;
 use App\Http\Controllers\Api\NewsApiController;
 use App\Http\Controllers\Api\PageAppiController;
 use App\Http\Controllers\Api\ProductApiController;
+use App\Http\Controllers\Api\CartApiController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -50,4 +51,9 @@ Route::apiResource('categories', CategoriesApiController::class)->only([
 Route::prefix('catalog')->group(function () {
     Route::get('product/list', [ProductApiController::class, 'index']);
     Route::get('product/details', [ProductApiController::class, 'show']);
+});
+
+Route::prefix('cart')->middleware('auth.optional:sanctum')->group(function () {
+    Route::post('set_quantity', [CartApiController::class, 'setQuantity']);
+    Route::get('show', [CartApiController::class, 'show']);
 });

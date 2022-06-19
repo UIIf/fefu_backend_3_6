@@ -3,6 +3,7 @@
 use App\Http\Controllers\Web\OAuthController;
 use App\Http\Controllers\Web\AuthWebController;
 use App\Http\Controllers\Web\AppealWebController;
+use App\Http\Controllers\Web\CartWebController;
 use App\Http\Controllers\Web\CategoriesWebController;
 use App\Http\Controllers\Web\PageWebController;
 use App\Http\Controllers\Web\NewsWebController;
@@ -32,6 +33,8 @@ Route::resource('news', NewsWebController::class)->only([
     'index',
     'show',
 ]);
+
+Route::get('/cart', CartWebController::class)->middleware('auth.optional');
 
 Route::get('/profile', [ProfileController::class, 'show'])
     ->name('profile')
