@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Web\OAuthController;
 use App\Http\Controllers\Web\AuthWebController;
+use App\Http\Controllers\Web\OrderWebController;
 use App\Http\Controllers\Web\AppealWebController;
 use App\Http\Controllers\Web\CartWebController;
 use App\Http\Controllers\Web\CategoriesWebController;
@@ -70,3 +71,6 @@ Route::post('/appeal', [AppealWebController::class, 'send'])->name('appeal.send'
 
 Route::get('/{slug}', [PageWebController::class, 'show']);
 
+Route::get('/checkout', [ OrderWebController::class, 'index'])->middleware('auth')->name('checkout.get');
+
+Route::post('/checkout', [ OrderWebController::class, 'store'])->middleware('auth')->name('checkout.post');
