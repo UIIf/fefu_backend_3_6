@@ -530,10 +530,135 @@
                     }
                 }
             }
+        },
+        "\/api\/cart\/set_quantity": {
+            "post": {
+                "tags": [
+                    "cart"
+                ],
+                "summary": "Add\/delete products to\/from cart or set quantity",
+                "requestBody": {
+                    "description": "Cart modification",
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "modifications": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "product_id": {
+                                                    "type": "integer"
+                                                },
+                                                "quantity": {
+                                                    "type": "integer"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Cart"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The modifications field is required."
+                                        },
+                                        "errors": {
+                                            "type": "array",
+                                            "properties": {
+                                                "modifications": {
+                                                    "type": "array",
+                                                    "example": [
+                                                        "The modifications field is required."
+                                                    ]
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/api\/cart\/show": {
+            "get": {
+                "tags": [
+                    "cart"
+                ],
+                "summary": "Get cart by user or session id",
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Cart"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
         "schemas": {
+            "Cart": {
+                "type": "object",
+                "properties": {
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "product": {
+                                    "$ref": "#\/components\/schemas\/FullInfoProduct"
+                                },
+                                "quantity": {
+                                    "type": "integer"
+                                },
+                                "price_item": {
+                                    "format": "double",
+                                    "type": "number"
+                                },
+                                "price_total": {
+                                    "format": "double",
+                                    "type": "number"
+                                }
+                            }
+                        }
+                    },
+                    "price_total": {
+                        "format": "double",
+                        "type": "number"
+                    }
+                }
+            },
             "Categories": {
                 "type": "object",
                 "properties": {
