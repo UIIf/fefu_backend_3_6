@@ -90,7 +90,7 @@ class Cart extends Model
     public function recalculateCart(): void
     {
         $this->fillItemsByProductId();
-
+        $this->price_total = 0;
         foreach ($this->itemsByProductId as $productId => $cartItem) {
             $cartItem->price_item = $cartItem->product->price;
             $cartItem->price_total = $cartItem->quantity * $cartItem->price_item;

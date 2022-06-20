@@ -7,6 +7,7 @@ use App\Http\Requests\CartModificationRequest;
 use App\Http\Resources\CartResource;
 use App\Models\Cart;
 use App\Models\Product;
+use App\OpenApi\RequestBodies\CartModificationRequestBody;
 use App\OpenApi\Responses\cart\CartValidationErrorResponse;
 use App\OpenApi\Responses\cart\ShowCartResponse;
 use Illuminate\Support\Facades\Auth;
@@ -24,6 +25,7 @@ class CartApiController extends Controller
     #[OpenApi\Operation(tags: ['cart'], method: 'POST')]
     #[OpenApi\Response(factory: ShowCartResponse::class, statusCode: 200)]
     #[OpenApi\Response(factory: CartValidationErrorResponse::class, statusCode: 422)]
+    #[OpenApi\RequestBody(factory: CartModificationRequestBody::class)]
     public function setQuantity(CartModificationRequest $request): CartResource
     {
         $data = $request->validated('modifications');
