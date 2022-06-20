@@ -98,6 +98,13 @@ class Cart extends Model
         }
     }
 
+    public function  isEmpty(): bool
+    {
+        $this->fillItemsByProductId();
+
+        return count($this->itemsByProductId) == 0;
+    }
+
     public function save(array $options = []): void
     {
         parent::save($options);
